@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         UpdateGroundNormal();
+        rb.AddForce(groundNormal * -Physics.gravity.magnitude);
     }
 
     private void Initialize()
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        rb.AddForce(Vector3.ProjectOnPlane(playerMovementVector, groundNormal).normalized * movementMultiplier);
+        rb.AddForce(Vector3.ProjectOnPlane(playerMovementVector, groundNormal).normalized * movementMultiplier, ForceMode.Impulse);
     }
 
     public void UpdateGroundNormal()
